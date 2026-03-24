@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Web</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="calculator">
+            <div class="calculator-display">
+                <input type="text" id="display" class="display" readonly>
+                <div class="display-history" id="history"></div>
+            </div>
+            
+            <div class="calculator-buttons">
+                <!-- Fila 1: Funciones especiales -->
+                <button class="btn function-btn" onclick="clearDisplay()">C</button>
+                <button class="btn function-btn" onclick="deleteLast()">⌫</button>
+                <button class="btn function-btn" onclick="toggleSign()">+/-</button>
+                <button class="btn operator-btn" onclick="appendOperator('/')">÷</button>
+                
+                <!-- Fila 2 -->
+                <button class="btn" onclick="appendNumber('7')">7</button>
+                <button class="btn" onclick="appendNumber('8')">8</button>
+                <button class="btn" onclick="appendNumber('9')">9</button>
+                <button class="btn operator-btn" onclick="appendOperator('*')">×</button>
+                
+                <!-- Fila 3 -->
+                <button class="btn" onclick="appendNumber('4')">4</button>
+                <button class="btn" onclick="appendNumber('5')">5</button>
+                <button class="btn" onclick="appendNumber('6')">6</button>
+                <button class="btn operator-btn" onclick="appendOperator('-')">−</button>
+                
+                <!-- Fila 4 -->
+                <button class="btn" onclick="appendNumber('1')">1</button>
+                <button class="btn" onclick="appendNumber('2')">2</button>
+                <button class="btn" onclick="appendNumber('3')">3</button>
+                <button class="btn operator-btn" onclick="appendOperator('+')">+</button>
+                
+                <!-- Fila 5 -->
+                <button class="btn zero-btn" onclick="appendNumber('0')">0</button>
+                <button class="btn" onclick="appendNumber('.')">.</button>
+                <button class="btn equals-btn" onclick="calculate()">=</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
