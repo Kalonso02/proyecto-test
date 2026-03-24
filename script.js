@@ -16,19 +16,33 @@ window.addEventListener('load', () => {
  * @param {string} num - Número o punto a añadir
  */
 function appendNumber(num) {
-    // Evitar múltiples puntos decimales
-    if (num === '.' && currentValue.includes('.')) {
+    // Si acaba de presionarse un operador, comenzar con un nuevo número
+    if (shouldResetDisplay) {
+        if (num === '.') {
+            currentValue = '0.';
+        } else {
+            currentValue = num;
+        }
+        shouldResetDisplay = false;
+        updateDisplay();
         return;
     }
 
-    // Si la pantalla está en '0' y se presiona un número, reemplaza el 0
-    if (currentValue === '0' && num !== '.') {
-        currentValue = num;
+    // Evitar múltiples puntos decimales
+    if (num === '.') {
+        if (currentValue.includes('.')) {
+            return;
+        }
+        currentValue += '.';
     } else {
-        currentValue += num;
+        // Si la pantalla está en '0' y se presiona un número, reemplaza el 0
+        if (currentValue === '0') {
+            currentValue = num;
+        } else {
+            currentValue += num;
+        }
     }
 
-    shouldResetDisplay = false;
     updateDisplay();
 }
 
@@ -37,7 +51,7 @@ function appendNumber(num) {
  * @param {string} op - Operador a añadir (+, -, *, /)
  */
 function appendOperator(op) {
-    // Si ya hay una operación incompleta, calcular primero
+    // Si hay un operador pendiente y una operación incompleta, calcular primero
     if (operator && !shouldResetDisplay) {
         calculate();
     }
@@ -52,13 +66,18 @@ function appendOperator(op) {
  * Realiza el cálculo
  */
 function calculate() {
-    if (!operator || shouldResetDisplay) {
+    if (!operator) {
         return;
     }
 
     let result;
     const prev = parseFloat(previousValue);
     const current = parseFloat(currentValue);
+
+    // Validar que ambos valores sean números
+    if (isNaN(prev) || isNaN(current)) {
+        return;
+    }
 
     // Operaciones
     switch (operator) {
